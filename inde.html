@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPL Live</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    font-family:Arial;
+    overflow:hidden;
+}
+
+#popup{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#111;
+    color:white;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    z-index:999;
+    width:280px;
+    box-shadow:0 0 20px rgba(255,255,255,0.2);
+}
+
+#popup button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#00ff66;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+video{
+    width:100vw;
+    height:100vh;
+    object-fit:cover;
+}
+</style>
+</head>
+
+<body>
+
+<div id="popup">
+    <h2>Already Joined</h2>
+    <p>You are successfully connected to Live Match</p>
+    <button onclick="startStream()">Watch Now</button>
+</div>
+
+<video id="video" controls autoplay></video>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<script>
+
+function startStream(){
+
+document.getElementById("popup").style.display="none";
+
+const video = document.getElementById('video');
+
+const videoSrc = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+
+if(Hls.isSupported()){
+
+    const hls = new Hls();
+
+    hls.loadSource(videoSrc);
+
+    hls.attachMedia(video);
+
+}
+
+else if(video.canPlayType('application/vnd.apple.mpegurl')){
+
+    video.src = videoSrc;
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
